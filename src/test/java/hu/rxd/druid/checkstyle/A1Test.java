@@ -1,4 +1,4 @@
-package hu.rxd;
+package hu.rxd.druid.checkstyle;
 
 import com.puppycrawl.tools.checkstyle.AbstractModuleTestSupport;
 import com.puppycrawl.tools.checkstyle.Checker;
@@ -12,7 +12,7 @@ public class A1Test extends AbstractModuleTestSupport
   @Override
   protected String getPackageLocation()
   {
-    return "hu/rxd";
+    return getClass().getPackage().getName().replaceAll("\\.", "/");
   }
 
   @Test

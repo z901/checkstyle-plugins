@@ -1,4 +1,4 @@
-package hu.rxd;
+package hu.rxd.druid.checkstyle;
 
 import static com.puppycrawl.tools.checkstyle.checks.naming.AbstractNameCheck.MSG_INVALID_PATTERN;
 

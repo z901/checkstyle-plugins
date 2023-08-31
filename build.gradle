@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+    id 'eclipse'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/com.puppycrawl.tools/checkstyle
+    implementation 'com.puppycrawl.tools:checkstyle:8.11'
+
+    // https://mvnrepository.com/artifact/junit/junit
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+    testImplementation group: 'com.puppycrawl.tools', name: 'checkstyle', version: '8.11', classifier: 'tests'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+}
