@@ -1,7 +1,5 @@
 package hu.rxd.druid.checkstyle;
 
-import static com.puppycrawl.tools.checkstyle.checks.naming.AbstractNameCheck.MSG_INVALID_PATTERN;
-
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -11,8 +9,8 @@ import java.util.Set;
 
 public class FunctionArgsAlignmentRule extends AbstractCheck
 {
-
-  public static final String MISALIGNED = null;
+  public static final String ARGS_MISALIGNED = "arguments.misaligned";
+  public static final String ARGS_MIXED_LINES = "arguments.mixed.lines";
 
   @Override
   public int[] getRequiredTokens()
@@ -59,11 +57,12 @@ public class FunctionArgsAlignmentRule extends AbstractCheck
     }
 
     if (childCount != childLineNos.size()) {
-      log(astCall,          MSG_INVALID_PATTERN          );
+      log(astCall, ARGS_MIXED_LINES);
+      return;
     }
 
     if (childColNos.size() != 1) {
-      log(astCall,          MSG_INVALID_PATTERN);
+      log(astCall, ARGS_MISALIGNED);
     }
   }
 }

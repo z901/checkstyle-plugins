@@ -5,8 +5,6 @@ import com.puppycrawl.tools.checkstyle.Checker;
 import com.puppycrawl.tools.checkstyle.DefaultConfiguration;
 import org.junit.Test;
 
-import static com.puppycrawl.tools.checkstyle.checks.naming.AbstractNameCheck.MSG_INVALID_PATTERN;
-
 public class FunctionArgsAlignmentRuleTest extends AbstractModuleTestSupport
 {
   @Override
@@ -16,14 +14,14 @@ public class FunctionArgsAlignmentRuleTest extends AbstractModuleTestSupport
   }
 
   @Test
-  public void testExtendsCase() throws Exception
+  public void testArgsSameLineOrAligned() throws Exception
   {
     final DefaultConfiguration checkConfig = new DefaultConfiguration(FunctionArgsAlignmentRule.class.getName());
 
     final String[] expected = {
-        "5:22: " + getCheckMessage(MSG_INVALID_PATTERN),
-        "7:22: " + getCheckMessage(MSG_INVALID_PATTERN),
-        "10:22: " + getCheckMessage(MSG_INVALID_PATTERN),
+        "5:22: " + getCheckMessage(FunctionArgsAlignmentRule.ARGS_MIXED_LINES),
+        "7:22: " + getCheckMessage(FunctionArgsAlignmentRule.ARGS_MIXED_LINES),
+        "10:22: " + getCheckMessage(FunctionArgsAlignmentRule.ARGS_MISALIGNED),
     };
     Checker checker = createChecker(checkConfig);
     verify(checker, getPath("ArgsSameLineOrAligned.java"), expected);
