@@ -1,7 +1,12 @@
 plugins {
     id 'java'
     id 'eclipse'
+    id 'maven-publish'
+    id 'com.palantir.git-version' version '0.12.2'
 }
+
+version = gitVersion()
+group = "hu.rxd"
 
 repositories {
     mavenCentral()
@@ -20,4 +25,28 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(8)
     }
+}
+
+publishing {
+  publications {
+    library(MavenPublication) {
+       from components.java
+    }
+  }
+  repositories {
+    maven {
+      name = "OSSRH"
+      url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+      credentials {
+        username = System.getenv("MAVEN_USERNAME")
+        password = System.getenv("MAVEN_PASSWORD")
+      }
+    }
+  }
+}
+
+tasks.publishLibraryPublicationToOSSRHRepository.doFirst {
+  if(project.version.contains("dirty") || project.version.contains('-')) {
+    throw new RuntimeException("Please don't do dirty/intermediate releases " + project.version);
+  }
 }
