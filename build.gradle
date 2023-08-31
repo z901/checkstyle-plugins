@@ -30,6 +30,30 @@ java {
 publishing {
   publications {
     library(MavenPublication) {
+            pom {
+                name = 'checkstyle-plugins'
+                description = 'Additional checkstyle plugins'
+                url = 'https://github.com/kgyrtkirk/checkstyle-plugins'
+        licenses {
+          license {
+            name = 'MIT License'
+	    url = 'http://www.opensource.org/licenses/mit-license.php'
+          }
+        }
+        developers {
+          developer {
+            id = 'kirk'
+            name = 'Zoltan Haindrich'
+            email = 'kirk@rxd.hu'
+          }
+        }
+        scm {
+          connection = 'scm:git:https://github.com/kgyrtkirk/checkstyle-plugins'
+          developerConnection = 'scm:sgit:https://github.com/kgyrtkirk/checkstyle-plugins'
+          url = 'https://github.com/kgyrtkirk/checkstyle-plugins'
+        }
+            }
+
        from components.java
     }
   }
