@@ -23,6 +23,7 @@ public class A1Test extends AbstractModuleTestSupport
     final String[] expected = {
         "5:22: " + getCheckMessage(MSG_INVALID_PATTERN),
         "7:22: " + getCheckMessage(MSG_INVALID_PATTERN),
+        "10:22: " + getCheckMessage(MSG_INVALID_PATTERN),
     };
     Checker checker = createChecker(checkConfig);
     verify(checker, getPath("ArgsSameLineOrAligned.java"), expected);
