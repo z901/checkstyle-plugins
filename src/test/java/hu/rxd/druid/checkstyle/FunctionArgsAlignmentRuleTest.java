@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import static com.puppycrawl.tools.checkstyle.checks.naming.AbstractNameCheck.MSG_INVALID_PATTERN;
 
-public class A1Test extends AbstractModuleTestSupport
+public class FunctionArgsAlignmentRuleTest extends AbstractModuleTestSupport
 {
   @Override
   protected String getPackageLocation()
@@ -18,7 +18,7 @@ public class A1Test extends AbstractModuleTestSupport
   @Test
   public void testExtendsCase() throws Exception
   {
-    final DefaultConfiguration checkConfig = new DefaultConfiguration(A1.class.getName());
+    final DefaultConfiguration checkConfig = new DefaultConfiguration(FunctionArgsAlignmentRule.class.getName());
 
     final String[] expected = {
         "5:22: " + getCheckMessage(MSG_INVALID_PATTERN),

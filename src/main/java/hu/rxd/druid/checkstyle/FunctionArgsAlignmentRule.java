@@ -9,7 +9,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import java.util.HashSet;
 import java.util.Set;
 
-public class A1 extends AbstractCheck
+public class FunctionArgsAlignmentRule extends AbstractCheck
 {
 
   public static final String MISALIGNED = null;
