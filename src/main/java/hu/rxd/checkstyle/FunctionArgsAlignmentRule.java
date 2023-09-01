@@ -80,17 +80,13 @@ public class FunctionArgsAlignmentRule extends AbstractCheck
   @Override
   public void visitToken(DetailAST astCall)
   {
-      String name = collectMethodNames(astCall.getFirstChild());
-      // DetailAST method = astCall.getFirstChild();
-      // method.get
-      // throw new RuntimeException(name);
-      if(!include.isEmpty() && !include.contains(name)) {
-        return;
-      }
-      if (exclude.contains(name)) {
-//        throw new RuntimeException(name);
-        return;
-      }
+    String name = collectMethodNames(astCall.getFirstChild());
+    if (!include.isEmpty() && !include.contains(name)) {
+      return;
+    }
+    if (exclude.contains(name)) {
+      return;
+    }
     DetailAST args = astCall.findFirstToken(TokenTypes.ELIST);
     if (args.getChildCount() == 0) {
       return;
@@ -124,24 +120,6 @@ public class FunctionArgsAlignmentRule extends AbstractCheck
     if (columnAlignment && childColNos.size() > 1) {
       log(astCall, ARGS_MISALIGNED, name);
     }
-  }
-
-  /**
-   * Returns the first column which is occupied by this ast node in its line.
-   *
-   * @param ast
-   * @return
-   */
-  private int getFirstColumn(DetailAST ast)
-  {
-    int ret = ast.getColumnNo();
-    for (DetailAST child = ast.getFirstChild(); child != null; child = child.getNextSibling()) {
-      if (child.getLineNo() != ast.getLineNo()) {
-        continue;
-      }
-      ret = Math.min(ret, getFirstColumn(child));
-    }
-    return ret;
   }
 
   private String collectMethodNames(DetailAST ast)
