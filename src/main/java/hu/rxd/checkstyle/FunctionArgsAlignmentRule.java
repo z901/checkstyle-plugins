@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import com.puppycrawl.tools.checkstyle.api.AbstractCheck;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.CheckUtil;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -13,17 +14,55 @@ public class FunctionArgsAlignmentRule extends AbstractCheck
 {
   public static final String ARGS_MISALIGNED = "arguments.misaligned";
   public static final String ARGS_MIXED_LINES = "arguments.mixed.lines";
-  private Set<String> ignores = Collections.emptySet();
+  private Set<String> include = Collections.emptySet();
+  private Set<String> exclude = Collections.emptySet();
+  private boolean columnAlignment = true;
+  private boolean columnAlignmentFirst = false;
+
+  /**
+   * Excluded function call names - separated with ','.
+   *
+   * Non-qualified method names; no package/class names!
+   *
+   * @param names
+   */
+  public void setExclude(String names)
+  {
+    this.exclude = Sets.newHashSet(names.split(","));
+  }
+
+  /**
+   * Excluded function call names - separated with ','.
+   *
+   * Non-qualified method names; no package/class names!
+   *
+   * @param names
+   */
+  public void setInclude(String names)
+  {
+    this.include = Sets.newHashSet(names.split(","));
+  }
+
+  /**
+   * Enables to check column alignment of arguments on separate lines.
+   */
+  public void setColumnAlignment(boolean enable)
+  {
+    columnAlignment = enable;
+  }
+
+  /**
+   * This may allow the first argument to remain next to the function call.
+   */
+  public void setColumnAlignmentFirst(boolean enable)
+  {
+    columnAlignmentFirst = enable;
+  }
 
   @Override
   public int[] getRequiredTokens()
   {
     return new int[] {TokenTypes.METHOD_CALL};
-  }
-
-  public void setIgnore(String ignores)
-  {
-    this.ignores = Sets.newHashSet(ignores.split(","));
   }
 
   @Override
@@ -41,16 +80,17 @@ public class FunctionArgsAlignmentRule extends AbstractCheck
   @Override
   public void visitToken(DetailAST astCall)
   {
-    if (true) {
       String name = collectMethodNames(astCall.getFirstChild());
       // DetailAST method = astCall.getFirstChild();
       // method.get
       // throw new RuntimeException(name);
-      if (ignores.contains(name)) {
+      if(!include.isEmpty() && !include.contains(name)) {
+        return;
+      }
+      if (exclude.contains(name)) {
 //        throw new RuntimeException(name);
         return;
       }
-    }
     DetailAST args = astCall.findFirstToken(TokenTypes.ELIST);
     if (args.getChildCount() == 0) {
       return;
@@ -63,9 +103,12 @@ public class FunctionArgsAlignmentRule extends AbstractCheck
       if (ast.getType() != TokenTypes.EXPR) {
         continue;
       }
+      DetailAST firstNode = CheckUtil.getFirstNode(ast);
       childCount++;
-      childLineNos.add(ast.getLineNo());
-      childColNos.add(ast.getColumnNo());
+      childLineNos.add(firstNode.getLineNo());
+      if (columnAlignmentFirst || childCount > 1) {
+        childColNos.add(firstNode.getColumnNo());
+      }
     }
 
     if (childLineNos.size() == 1) {
@@ -74,13 +117,31 @@ public class FunctionArgsAlignmentRule extends AbstractCheck
     }
 
     if (childCount != childLineNos.size()) {
-      log(astCall, ARGS_MIXED_LINES);
+      log(astCall, ARGS_MIXED_LINES, name);
       return;
     }
 
-    if (childColNos.size() != 1) {
-      log(astCall, ARGS_MISALIGNED);
+    if (columnAlignment && childColNos.size() > 1) {
+      log(astCall, ARGS_MISALIGNED, name);
     }
+  }
+
+  /**
+   * Returns the first column which is occupied by this ast node in its line.
+   *
+   * @param ast
+   * @return
+   */
+  private int getFirstColumn(DetailAST ast)
+  {
+    int ret = ast.getColumnNo();
+    for (DetailAST child = ast.getFirstChild(); child != null; child = child.getNextSibling()) {
+      if (child.getLineNo() != ast.getLineNo()) {
+        continue;
+      }
+      ret = Math.min(ret, getFirstColumn(child));
+    }
+    return ret;
   }
 
   private String collectMethodNames(DetailAST ast)
