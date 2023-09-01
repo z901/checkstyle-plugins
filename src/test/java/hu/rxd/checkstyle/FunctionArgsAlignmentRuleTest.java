@@ -1,4 +1,4 @@
-package hu.rxd.druid.checkstyle;
+package hu.rxd.checkstyle;
 
 import com.puppycrawl.tools.checkstyle.AbstractModuleTestSupport;
 import com.puppycrawl.tools.checkstyle.Checker;
