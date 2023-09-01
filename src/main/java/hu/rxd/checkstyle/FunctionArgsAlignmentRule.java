@@ -20,11 +20,11 @@ public class FunctionArgsAlignmentRule extends AbstractCheck
   private boolean columnAlignmentFirst = false;
 
   /**
-   * Excluded function call names - separated with ','.
+   * Excluded function call names.
    *
    * Non-qualified method names; no package/class names!
    *
-   * @param names
+   * @param names function call names (separated with ',')
    */
   public void setExclude(String names)
   {
@@ -32,11 +32,11 @@ public class FunctionArgsAlignmentRule extends AbstractCheck
   }
 
   /**
-   * Excluded function call names - separated with ','.
+   * Included function call names.
    *
    * Non-qualified method names; no package/class names!
    *
-   * @param names
+   * @param names function call names (separated with ',')
    */
   public void setInclude(String names)
   {
@@ -45,6 +45,10 @@ public class FunctionArgsAlignmentRule extends AbstractCheck
 
   /**
    * Enables to check column alignment of arguments on separate lines.
+   *
+   * Default: enabled
+   *
+   * @param enable Enable flag
    */
   public void setColumnAlignment(boolean enable)
   {
@@ -53,6 +57,10 @@ public class FunctionArgsAlignmentRule extends AbstractCheck
 
   /**
    * This may allow the first argument to remain next to the function call.
+   *
+   * Default: disabled
+   *
+   * @param enable Enable flag
    */
   public void setColumnAlignmentFirst(boolean enable)
   {

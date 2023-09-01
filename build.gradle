@@ -25,12 +25,14 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(8)
     }
+    withSourcesJar()
+    withJavadocJar()
 }
 
 publishing {
   publications {
     library(MavenPublication) {
-            pom {
+        pom {
                 name = 'checkstyle-plugins'
                 description = 'Additional checkstyle plugins'
                 url = 'https://github.com/kgyrtkirk/checkstyle-plugins'
