@@ -3,6 +3,7 @@ plugins {
     id 'eclipse'
     id 'maven-publish'
     id 'com.palantir.git-version' version '0.12.2'
+    id 'signing'
 }
 
 version = gitVersion()
@@ -76,3 +77,8 @@ tasks.publishLibraryPublicationToOSSRHRepository.doFirst {
     throw new RuntimeException("Please don't do dirty/intermediate releases " + project.version);
   }
 }
+
+signing {
+  sign publishing.publications.library
+}
+
