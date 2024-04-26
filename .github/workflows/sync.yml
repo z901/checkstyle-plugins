@@ -14,7 +14,7 @@ jobs:
     - name: Create PR to branch
       uses: gorillio/github-action-sync@master
       with:
-        upstream: git@github.com:kgyrtkirk/checkstyle-plugins
+        upstream: https://github.com/kgyrtkirk/checkstyle-plugins
         upstream_branch: upstream
         branch: main
         pr_labels: upstream
