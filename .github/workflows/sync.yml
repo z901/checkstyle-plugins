@@ -2,7 +2,7 @@ name: Pull upstream
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '0 * * * *'
+    - cron:  '* * * * *'
   workflow_dispatch:
 jobs:
   release_pull_request:
@@ -22,3 +22,4 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
         GITBOT_EMAIL: vasarlas.git@rxd.hu
         DRY_RUN: false
+
