@@ -1,4 +1,3 @@
-
 // asd 2
 // xxx
 plugins {
@@ -81,7 +80,7 @@ tasks.publishLibraryPublicationToOSSRHRepository.doFirst {
     throw new RuntimeException("Please don't do dirty/intermediate releases " + project.version);
   }
 }
-
+// asd
 signing {
   sign publishing.publications.library
 }
