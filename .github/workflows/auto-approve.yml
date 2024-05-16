@@ -7,6 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    if: github.event.issue.user.login == 'kgyrtkirk'
+    #if: github.event.issue.user.login == 'kgyrtkirk'
     steps:
       - uses: hmarr/auto-approve-action@v4
