@@ -1,4 +1,4 @@
-name: auto-merge
+name: Enable auto-merge
 
 on:
   workflow_run:
@@ -18,3 +18,4 @@ jobs:
       uses: gradle/gradle-build-action@v2
     - name: Run build with Gradle Wrapper
       run: ./gradlew build
+
