@@ -2,9 +2,7 @@ name: Build / Test
 
 on:
   push:
-    - '*'
   pull_request:
-    - '*'
 
 jobs:
   build-gradle-project:
@@ -19,7 +17,7 @@ jobs:
 
   quality-gate:
     needs: [build-gradle-project]
-    runs-on: ubuntu-latest
-    steps:
-    - run: echo ok
+#    runs-on: ubuntu-latest
+#    steps:
+#    - run: echo ok
 
