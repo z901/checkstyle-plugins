@@ -11,4 +11,6 @@ jobs:
     steps:
       - uses: hmarr/auto-approve-action@v4
       - run: gh pr merge --auto -m
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
 
