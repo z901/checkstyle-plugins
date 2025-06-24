@@ -1,3 +1,5 @@
+
+gfd
 @rem x
 @rem
 @rem Copyright 2015 the original author or authors.
@@ -91,6 +93,7 @@ exit /b %EXIT_CODE%
 if "%OS%"=="Windows_NT" endlocal
 
 :omega
+asd
 asd
 asd
 asd
