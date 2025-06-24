@@ -5,8 +5,9 @@ on: pull_request_target
 jobs:
   enable-automerge:
     runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
+    #permissions:
+    #  pull-requests: write
+    #  enablePullRequestAutoMerge: true
     ##if: github.event.issue.user.login == 'kgyrtkirk'
     steps:
       - uses: actions/checkout@v3
