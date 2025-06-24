@@ -13,8 +13,10 @@ jobs:
       - uses: hmarr/auto-approve-action@v4
       - run: gh pr list ; echo ${{ github.event.pull_request.number }}
         env:
-          GH_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
+          #GH_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
       - run: gh pr merge ${{ github.event.pull_request.number }} --auto -m
         env:
-          GH_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
+          #GH_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
 
