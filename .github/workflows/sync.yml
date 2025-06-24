@@ -1,8 +1,8 @@
 name: Pull upstream
 on:
-  schedule:
-    # * is a special character in YAML so you have to quote this string
-    - cron:  '* * * * *'
+  #schedule:
+  #  # * is a special character in YAML so you have to quote this string
+  #  - cron:  '* * * * *'
   workflow_dispatch:
 jobs:
   release_pull_request:
