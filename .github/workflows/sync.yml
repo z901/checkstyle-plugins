@@ -12,12 +12,13 @@ jobs:
     - name: checkout
       uses: actions/checkout@v1
     - name: Create PR to branch
-      uses: gorillio/github-action-sync@master
+      uses: kgyrtkirk/github-action-sync@master
       with:
         upstream: https://github.com/kgyrtkirk/checkstyle-plugins
         upstream_branch: upstream
         branch: main
         pr_labels: upstream
+        pr_title: this->that
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
         GITBOT_EMAIL: vasarlas.git@rxd.hu
