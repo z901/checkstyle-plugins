@@ -5,19 +5,11 @@ on: pull_request_target
 jobs:
   enable-automerge:
     runs-on: ubuntu-latest
-    #permissions:
-    #  pull-requests: write
-    #  enablePullRequestAutoMerge: true
-    ##if: github.event.issue.user.login == 'kgyrtkirk'
+    if: startsWith(github.head_ref, 'sync/')
     steps:
-      - uses: actions/checkout@v3
-      - uses: hmarr/auto-approve-action@v4
-      - run: gh pr list ; echo ${{ github.event.pull_request.number }}
+      - run: |
+          gh pr review ${{ github.event.pull_request.number }} -a
+          gh pr merge ${{ github.event.pull_request.number }} --auto -m
         env:
           GH_TOKEN: ${{ github.token }}
-          #GH_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
-      - run: gh pr merge ${{ github.event.pull_request.number }} --auto -m
-        env:
-          GH_TOKEN: ${{ github.token }}
-          #GH_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
 
