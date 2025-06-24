@@ -11,6 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: hmarr/auto-approve-action@v4
+      - run: gh pr list ; echo $PR_URL
       - run: gh pr merge --auto -m "$PR_URL"
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
