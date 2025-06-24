@@ -17,7 +17,7 @@ jobs:
 
   quality-gate:
     needs: [build-gradle-project]
-#    runs-on: ubuntu-latest
-#    steps:
-#    - run: echo ok
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo ok
 
