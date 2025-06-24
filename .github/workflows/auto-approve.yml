@@ -7,6 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     if: startsWith(github.head_ref, 'sync/')
     steps:
+      - uses: actions/checkout@v3
       - run: |
           gh pr review ${{ github.event.pull_request.number }} -a
           gh pr merge ${{ github.event.pull_request.number }} --auto -m
