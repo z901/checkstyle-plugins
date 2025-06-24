@@ -9,6 +9,7 @@ jobs:
       pull-requests: write
     ##if: github.event.issue.user.login == 'kgyrtkirk'
     steps:
+      - uses: actions/checkout@v3
       - uses: hmarr/auto-approve-action@v4
       - run: gh pr merge --auto -m
         env:
