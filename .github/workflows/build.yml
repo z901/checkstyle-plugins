@@ -30,6 +30,8 @@ jobs:
        set -ex
        git merge --ff-only x-deploy
        git tag -f x-deploy
+       git tag -f x-deploy2
        git push origin -f x-deploy
+       git push origin -f x-deploy2
       env:
        GH_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
