@@ -26,6 +26,7 @@ jobs:
       with:
         fetch-depth: 0
         fetch-tags: true
+        token: ${{ secrets.WORKFLOW_TOKEN }}
     - run: |
        set -ex
        git merge --ff-only x-deploy
@@ -35,5 +36,5 @@ jobs:
        git push origin -f x-deploy
        git push origin -f x-deploy2
        git push origin -f x-deploy3
-      env:
-       GH_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+#      env:
+#       GH_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
