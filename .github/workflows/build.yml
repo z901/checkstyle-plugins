@@ -32,4 +32,4 @@ jobs:
        git tag -f x-deploy
        git push origin -f x-deploy
       env:
-       GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+       GH_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
