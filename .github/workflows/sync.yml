@@ -20,6 +20,8 @@ jobs:
       with:
         fetch-depth: 0
         token: ${{ secrets.WORKFLOW_TOKEN }}
+    - run: |
+        .github/scripts/sync_cleanup
     - name: add upstream
       run: |
         git config user.name github-actions
@@ -30,8 +32,6 @@ jobs:
     - run: |
         REF=`git rev-parse upstream/${SOURCE}`
         .github/scripts/sync_open_pr $REF
-    - run: |
-        .github/scripts/sync_cleanup
 
   main2:
     runs-on: ubuntu-latest
@@ -48,6 +48,8 @@ jobs:
       with:
         fetch-depth: 0
         token: ${{ secrets.WORKFLOW_TOKEN }}
+    - run: |
+        .github/scripts/sync_cleanup
     - name: add upstream
       run: |
         git config user.name github-actions
@@ -58,6 +60,4 @@ jobs:
     - run: |
         REF=`git rev-parse upstream/${SOURCE}`
         .github/scripts/sync_open_pr --denoise $REF
-    - run: |
-        .github/scripts/sync_cleanup
 
