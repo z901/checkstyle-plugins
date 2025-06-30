@@ -17,6 +17,12 @@ jobs:
     - name: Run build with Gradle Wrapper
       run: ./gradlew build
 
+  quality-gate:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo ok
+
   trigger-deploy:
     runs-on: ubuntu-latest
     if: ${{ !cancelled() && github.event_name == 'push' }}
