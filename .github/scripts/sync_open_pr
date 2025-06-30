@@ -34,5 +34,7 @@ if [ "$denoise" != 0 ];then
   fi
 fi
 
+JOB_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+
 git push -u origin "$pr_branch"
-gh pr create -B "$TARGET" -H "$pr_branch" -l "$LABELS" -t "$PREFIX: $REF"
+gh pr create -B "$TARGET" -H "$pr_branch" -l "$LABELS" -t "$PREFIX: $REF" -b "Opened by $JOB_URL"
