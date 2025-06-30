@@ -12,7 +12,7 @@ jobs:
     - name: checkout
       uses: actions/checkout@v1
     - name: Create PR to branch
-      uses: kgyrtkirk/github-action-sync@master
+      uses: kgyrtkirk/github-action-sync@denoise
       with:
         upstream: https://github.com/kgyrtkirk/checkstyle-plugins
         upstream_branch: upstream
@@ -24,4 +24,24 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
         GITBOT_EMAIL: vasarlas.git@rxd.hu
         DRY_RUN: false
+
+  release_pull_request:
+    runs-on: ubuntu-latest
+    name: release_pull_request
+    steps:
+    - name: checkout
+      uses: actions/checkout@v1
+    - name: Create PR to branch
+      uses: kgyrtkirk/github-action-sync@denoise
+      with:
+        upstream: https://github.com/z901/checkstyle-plugins
+        upstream_branch: main
+        branch: main2
+        pr_labels: upstream
+        pr_title: main->main2
+        sync_branch_prefix: sync/m2
+      env:
+        GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+        GITBOT_EMAIL: vasarlas.git@rxd.hu
+        DRY_RUN: true
 
