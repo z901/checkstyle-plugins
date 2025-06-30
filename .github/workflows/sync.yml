@@ -41,5 +41,5 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
         GITBOT_EMAIL: vasarlas.git@rxd.hu
-        DRY_RUN: false
+        DRY_RUN: true
 
