@@ -13,7 +13,7 @@ set -x
 
 REF=$1
 
-cnt=$(gh pr list -s all -S "in:title $REF" | tee >(cat >&2) | wc -l)
+cnt=$(gh pr list -s all -S "in:title $PREFIX $REF" | tee >(cat >&2) | wc -l)
 if [ "$cnt" != 0 ];then
   echo "@ PR already exists for $REF"
   exit 0
