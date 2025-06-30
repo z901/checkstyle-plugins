@@ -10,6 +10,8 @@ jobs:
     env:
       PREFIX: sync/main
       GH_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+      SOURCE_REPO: https://github.com/kgyrtkirk/checkstyle-plugins
+      SOURCE: upstream
       TARGET: main
       LABELS: sync
     steps:
@@ -23,10 +25,39 @@ jobs:
         git config user.name github-actions
         git config user.email github-actions@github.com
         gh repo set-default ${{ github.server_url }}/${{ github.repository }}
-        git remote add upstream https://github.com/kgyrtkirk/checkstyle-plugins
+        git remote add upstream $SOURCE_REPO
         git fetch upstream
     - run: |
-        REF=`git rev-parse upstream/main`
+        REF=`git rev-parse upstream/${SOURCE}`
+        .github/scripts/sync_open_pr $REF
+    - run: |
+        .github/scripts/sync_cleanup
+
+  main2:
+    runs-on: ubuntu-latest
+    env:
+      PREFIX: sync/main2
+      GH_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+      SOURCE_REPO: https://github.com/z901/checkstyle-plugins
+      SOURCE: main
+      TARGET: main2
+      LABELS: sync
+    steps:
+    - name: checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        token: ${{ secrets.WORKFLOW_TOKEN }}
+    - name: add upstream
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        gh repo set-default ${{ github.server_url }}/${{ github.repository }}
+        git remote add upstream $SOURCE_REPO
+        git fetch upstream
+    - run: |
+        REF=`git rev-parse upstream/${SOURCE}`
         .github/scripts/sync_open_pr --denoise $REF
     - run: |
         .github/scripts/sync_cleanup
+
