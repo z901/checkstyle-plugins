@@ -19,11 +19,9 @@ jobs:
         token: ${{ secrets.WORKFLOW_TOKEN }}
     - name: add upstream
       run: |
-        gh pr list
         gh repo set-default ${{ github.server_url }}/${{ github.repository }}
         git remote add upstream https://github.com/kgyrtkirk/checkstyle-plugins
         git fetch upstream
-        gh pr list
     - run: |
         REF=`git rev-parse upstream/main`
         .github/scripts/sync_open_pr --denoise $REF
