@@ -20,6 +20,8 @@ jobs:
         token: ${{ secrets.WORKFLOW_TOKEN }}
     - name: add upstream
       run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
         gh repo set-default ${{ github.server_url }}/${{ github.repository }}
         git remote add upstream https://github.com/kgyrtkirk/checkstyle-plugins
         git fetch upstream
