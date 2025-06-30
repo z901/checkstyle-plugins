@@ -7,7 +7,6 @@ on:
 jobs:
   pull_upstream:
     runs-on: ubuntu-latest
-    name: release_pull_request
     steps:
     - name: checkout
       uses: actions/checkout@v1
@@ -27,7 +26,6 @@ jobs:
 
   main2:
     runs-on: ubuntu-latest
-    name: release_pull_request
     steps:
     - name: checkout
       uses: actions/checkout@v1
