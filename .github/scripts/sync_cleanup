@@ -1,9 +1,8 @@
 #!/bin/bash
 
-[ "$#" -ne 1 ] && echo "usage: $0 <target-branch>" && exit 1
-
-TARGET=$1
-LABELS=sync
+[ "$PREFIX" == "" ] && echo "PREFIX is unset: its used as the branch and pr title prefix" && exit 1
+[ "$TARGET" == "" ] && echo "TARGET is unset: it must be the target branch" && exit 1
+[ "$LABELS" == "" ] && echo "LABELS is unset: it must be a list of labels for the sync PRs" && exit 1
 
 for PR_NUMBER in $(gh pr list -l "${LABELS}" -S "in:title ${PREFIX}" --json number -q '.[].number'); do
    pr_sha=$(gh pr view $PR_NUMBER --json title -q '.title' | sed 's/.*://'| tr -d ' ')

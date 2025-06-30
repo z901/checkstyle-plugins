@@ -1,16 +1,17 @@
 #!/bin/bash
 
-LABELS=sync
-
 [ "$1" == "--denoise" ] && denoise=1 && shift
-[ "$#" -ne 3 ] && echo "usage: $0 [--denoise] <target-branch> <ref> <prefix>" && exit 1
+
+[ "$#" -ne 1 ] && echo "usage: $0 [--denoise] <ref>" && exit 1
+
+[ "$PREFIX" == "" ] && echo "PREFIX is unset: its used as the branch and pr title prefix" && exit 1
+[ "$TARGET" == "" ] && echo "TARGET is unset: it must be the target branch" && exit 1
+[ "$LABELS" == "" ] && echo "LABELS is unset: it must be a list of labels for the sync PRs" && exit 1
 
 set -e
 set -x
 
-TARGET=$1
-REF=$2
-PREFIX=$3
+REF=$1
 
 cnt=$(gh pr list -S "in:title $REF" | tee >(cat >&2) | wc -l)
 if [ "$cnt" != 0 ];then
@@ -18,7 +19,7 @@ if [ "$cnt" != 0 ];then
   exit 0
 fi
 
-pr_branch="${PREFIX}-${last_sha}"
+pr_branch="${PREFIX}-${REF}"
 
 git checkout -b "${pr_branch}" ${REF}
 
@@ -33,6 +34,5 @@ if [ "$denoise" != 0 ];then
   fi
 fi
 
-git push -u origin "${pr_branch}"
-gh pr create -B "${INPUT_BRANCH}" -H "${pr_branch}" -l "${LABELS}" -t "$PREFIX: ${REF}"
-
+git push -u origin "$pr_branch"
+gh pr create -B "$TARGET" -H "$pr_branch" -l "$LABELS" -t "$PREFIX: $REF"
