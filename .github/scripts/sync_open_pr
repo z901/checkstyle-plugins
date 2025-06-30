@@ -1,0 +1,40 @@
+#!/bin/bash
+
+[ "$1" == "--denoise" ] && denoise=1 && shift
+
+[ "$#" -ne 1 ] && echo "usage: $0 [--denoise] <ref>" && exit 1
+
+[ "$PREFIX" == "" ] && echo "PREFIX is unset: its used as the branch and pr title prefix" && exit 1
+[ "$TARGET" == "" ] && echo "TARGET is unset: it must be the target branch" && exit 1
+[ "$LABELS" == "" ] && echo "LABELS is unset: it must be a list of labels for the sync PRs" && exit 1
+
+set -e
+set -x
+
+REF=$1
+
+cnt=$(gh pr list -s all -S "in:title $REF" | tee >(cat >&2) | wc -l)
+if [ "$cnt" != 0 ];then
+  echo "@ PR already exists for $REF"
+  exit 0
+fi
+
+pr_branch="${PREFIX}-${REF}"
+
+git checkout -b "${pr_branch}" ${REF}
+
+if [ "$denoise" == 1 ];then
+  echo "@ denoise enabled."
+  if git merge "origin/${TARGET}"; then
+    echo "@ denoised: merge commit"
+  else
+    echo "@ denoised: empty commit"
+    git merge --abort
+    git commit --allow-empty -m "Forced empty commit to denoise branches"
+  fi
+fi
+
+JOB_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+
+git push -u origin "$pr_branch"
+gh pr create -B "$TARGET" -H "$pr_branch" -l "$LABELS" -t "$PREFIX: $REF" -b "Opened by $JOB_URL"
