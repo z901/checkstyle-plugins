@@ -18,7 +18,7 @@ jobs:
     - name: add upstream
       run: |
         gh pr list
-        gh repo set-default ${{ github.event.repository.name }}
+        gh repo set-default ${{ github.event.repo.name }}
         git remote add upstream https://github.com/kgyrtkirk/checkstyle-plugins
         git fetch upstream
         gh pr list
