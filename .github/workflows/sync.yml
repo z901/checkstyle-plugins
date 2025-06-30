@@ -44,3 +44,4 @@ jobs:
         GITBOT_EMAIL: vasarlas.git@rxd.hu
         DRY_RUN: false
 
+
