@@ -5,7 +5,7 @@ on:
   #  - cron:  '* * * * *'
   workflow_dispatch:
 jobs:
-  release_pull_request:
+  pull_upstream:
     runs-on: ubuntu-latest
     name: release_pull_request
     steps:
@@ -25,7 +25,7 @@ jobs:
         GITBOT_EMAIL: vasarlas.git@rxd.hu
         DRY_RUN: false
 
-  release_pull_request:
+  main2:
     runs-on: ubuntu-latest
     name: release_pull_request
     steps:
