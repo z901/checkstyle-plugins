@@ -23,7 +23,7 @@ pr_branch="${PREFIX}-${REF}"
 
 git checkout -b "${pr_branch}" ${REF}
 
-if [ "$denoise" != 0 ];then
+if [ "$denoise" == 1 ];then
   echo "@ denoise enabled."
   if git merge "origin/${TARGET}"; then
     echo "@ denoised: merge commit"
