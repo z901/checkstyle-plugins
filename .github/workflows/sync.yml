@@ -17,8 +17,8 @@ jobs:
         token: ${{ secrets.WORKFLOW_TOKEN }}
     - name: add upstream
       run: |
-        gh repo set-default
         gh pr list
+        gh repo set-default ${{ github.event.repository.name }}
         git remote add upstream https://github.com/kgyrtkirk/checkstyle-plugins
         git fetch upstream
         gh pr list
