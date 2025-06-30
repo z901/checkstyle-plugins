@@ -7,43 +7,19 @@ on:
 jobs:
   pull_upstream:
     runs-on: ubuntu-latest
+    env:
+      PREFIX: sync/main
     steps:
     - name: checkout
-      uses: actions/checkout@v1
-    - name: Create PR to branch
-      uses: kgyrtkirk/github-action-sync@denoise
+      uses: actions/checkout@v4
       with:
-        upstream: https://github.com/kgyrtkirk/checkstyle-plugins
-        upstream_branch: upstream
-        branch: main
-        pr_labels: upstream
-        pr_title: this->that
-        sync_branch_prefix: sync/this/that
-        cleanup: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
-        GITBOT_EMAIL: vasarlas.git@rxd.hu
-        DRY_RUN: false
-
-  main2:
-    runs-on: ubuntu-latest
-    steps:
-    - name: checkout
-      uses: actions/checkout@v1
-    - name: Create PR to branch
-      uses: kgyrtkirk/github-action-sync@denoise
-      with:
-        upstream: https://github.com/z901/checkstyle-plugins
-        upstream_branch: main
-        branch: main2
-        pr_labels: bot,upstream
-        pr_title: main->main2
-        sync_branch_prefix: sync/m2
-        denoise_message: 'Forced empty commit to denoise branches'
-        cleanup: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
-        GITBOT_EMAIL: vasarlas.git@rxd.hu
-        DRY_RUN: false
-
-
+        token: ${{ secrets.WORKFLOW_TOKEN }}
+    - name: add upstream
+      run: |
+        git remote add upstream https://github.com/kgyrtkirk/checkstyle-plugins
+        git fetch upstream
+    - run: |
+        REF=git rev-parse upstream/main
+        .github/scripts/sync_open_pr --denoise main $REF "$PREFIX: $REF"
+    - run: |
+        .github/scripts/sync_cleanup "$PREFIX"
