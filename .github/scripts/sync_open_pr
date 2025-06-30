@@ -29,6 +29,7 @@ if [ "$denoise" == 1 ];then
     echo "@ denoised: merge commit"
   else
     echo "@ denoised: empty commit"
+    LABELS+=",conflict"
     git merge --abort
     git commit --allow-empty -m "Forced empty commit to denoise branches"
   fi
