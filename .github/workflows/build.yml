@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     strategy:
-      fail-fast: false
+      #fail-fast: false
       matrix:
         target: [build, joke]
     runs-on: ubuntu-latest
