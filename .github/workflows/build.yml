@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     strategy:
-      #fail-fast: false
+      fail-fast: false
       matrix:
         target: [build, joke]
     runs-on: ubuntu-latest
@@ -21,21 +21,15 @@ jobs:
     - name: Run build with Gradle Wrapper
       run: ./gradlew ${{ matrix.target }}
 
-  gate0:
+  quality-gate:
     needs: [build]
-    runs-on: ubuntu-latest
-    steps:
-    - run: echo ok
-
-  quality-gate1:
-    needs: [gate0]
     if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     steps:
     - run: exit 1
-      if: ${{ needs.gate0.result != 'success' }}
+      if: ${{ !success() }}
 
-  quality-gate:
+  quality-gate1:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
