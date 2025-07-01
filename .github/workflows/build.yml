@@ -27,7 +27,7 @@ jobs:
     steps:
     - run: echo ok
 
-  quality-gate1:
+  quality-gate:
     needs: [gate0]
     if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
@@ -35,7 +35,7 @@ jobs:
     - run: exit 1
       if: ${{ needs.gate0.result != 'success' }}
 
-  quality-gate:
+  quality-gate1:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
