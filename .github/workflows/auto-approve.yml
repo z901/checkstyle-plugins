@@ -5,7 +5,7 @@ on: pull_request_target
 jobs:
   enable-automerge:
     runs-on: ubuntu-latest
-    if: startsWith(github.head_ref, 'sync/') || startsWith(github.head_ref, 'uuu')
+    if: startsWith(github.head_ref, 'sync/')
     steps:
       - uses: actions/checkout@v3
       - run: |
