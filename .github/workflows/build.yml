@@ -2,12 +2,16 @@ name: Build / Test
 
 on:
   push:
-    branches: [ '**' ]
+    branches: [ 'master', 'main' ]
   pull_request:
     branches: [ '**' ]
 
 jobs:
   build:
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [build, joke]
     runs-on: ubuntu-latest
     steps:
     - name: Checkout project sources
@@ -15,7 +19,21 @@ jobs:
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v2
     - name: Run build with Gradle Wrapper
-      run: ./gradlew build
+      run: ./gradlew ${{ matrix.target }}
+
+  gate0:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo ok
+
+  quality-gate1:
+    needs: [gate0]
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    steps:
+    - run: exit 1
+      if: ${{ needs.gate0.result != 'success' }}
 
   quality-gate:
     needs: [build]
