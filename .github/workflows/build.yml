@@ -21,13 +21,19 @@ jobs:
     - name: Run build with Gradle Wrapper
       run: ./gradlew ${{ matrix.target }}
 
-  quality-gate:
+  gate0:
     needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo ok
+
+  quality-gate:
+    needs: [gate0]
     if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     steps:
     - run: exit 1
-      if: ${{ !success() }}
+      if: ${{ needs.gate0.result != 'success' }}
 
   quality-gate1:
     needs: [build]
